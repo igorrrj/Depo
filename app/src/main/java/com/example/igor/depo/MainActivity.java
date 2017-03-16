@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
 
-        
+        String d;
         Fragment fragment = null;
         Class fragmentClass = null;
         fragmentClass = PublicTransportTabFragment.class;
