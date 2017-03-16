@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:paddingTop="20dp"
+        android:drawableTop="@drawable/ic_home"
+        android:background="@drawable/circle_button_for_menu"
+        android:id="@+id/button"
+        android:textColor="@color/White"
+        android:text="Поезда дальнего следования"
+        android:layout_gravity="center"
+        android:textSize="12sp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        />
+</LinearLayout>

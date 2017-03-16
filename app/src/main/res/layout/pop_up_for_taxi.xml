@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+     android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/background_border_pop_up"
+    android:padding="0dp"
+    >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/taxi_name"
+        android:text="Vumpel"
+        android:textSize="30dp"
+        android:textColor="@color/White"
+        android:background="@drawable/background_border_pop_up_text"
+        android:gravity="center"
+        />
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/listView"
+        android:dividerHeight="1px"
+        android:divider="@drawable/divider_for_call"
+        />
+</LinearLayout>
+
+
+
