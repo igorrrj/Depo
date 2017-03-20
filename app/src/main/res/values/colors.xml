@@ -6,7 +6,13 @@
     <color name="White">#f9f9f9</color>
     <color name="Black">#000000</color>
     <color name="Grey">#8e8c8c</color>
+    <color name="LightGrey">#d2e2e2e2</color>
     <color name="apptheme_color">#DA4A38</color>
     <color name="Green">#07b93c</color>
+    <color name="CyanDark">#00acc1</color>
+    <color name="Cyan">#00bcd4</color>
+    <color name="Deep_Orange">#FF6722</color>
+    <color name="Yellow">#ffeb3b</color>
+
 
 </resources>

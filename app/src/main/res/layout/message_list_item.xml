@@ -22,7 +22,7 @@
             <LinearLayout
                 android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true"
-                android:background="@color/colorPrimary"
+                android:background="@color/Cyan"
                 android:layout_width="4dp"
                 android:layout_height="match_parent"/>
 

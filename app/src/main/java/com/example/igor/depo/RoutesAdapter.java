@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 /**
@@ -38,10 +39,23 @@ public class RoutesAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View listViewItem = inflater.inflate(R.layout.item_route, parent, false);
-         TextView  textViewName = (TextView) listViewItem.findViewById(R.id.name);
-
+        View listViewItem = inflater.inflate(R.layout.item_route_demo, parent, false);
+        LinearLayout topLiner,bottomLiner;
+        topLiner=(LinearLayout)listViewItem.findViewById(R.id.top_LinerLayout);
+        bottomLiner=(LinearLayout)listViewItem.findViewById(R.id.bottom_LinerLayout);
+        TextView  textViewName = (TextView) listViewItem.findViewById(R.id.name);
         textViewName.setText(route[position]);
+        if(position==0)
+        {
+            topLiner.setVisibility(View.INVISIBLE);
+        }
+        if(position==route.length-1)
+        {
+            bottomLiner.setVisibility(View.INVISIBLE);
+        }
+
+
+
 
 
         return listViewItem;

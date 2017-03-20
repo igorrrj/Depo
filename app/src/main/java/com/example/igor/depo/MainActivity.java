@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_home) {
             // Handle the camera action
             fragmentClass=PublicTransportTabFragment.class;
-            toolbar.setTitle("Транспорт");
+            toolbar.setTitle("");
 
         } else if (id == R.id.nav_taxi) {
             fragmentClass=Taxi.class;

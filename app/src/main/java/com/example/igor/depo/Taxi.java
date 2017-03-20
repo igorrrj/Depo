@@ -1,18 +1,21 @@
 package com.example.igor.depo;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -48,13 +51,6 @@ public class Taxi extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.taxi,container, false);
-        fab_up= AnimationUtils.loadAnimation(getActivity(),R.anim.move_up);
-        fab_down= AnimationUtils.loadAnimation(getActivity(),R.anim.move_down);
-        final FloatingActionButton floatingActionButton=(FloatingActionButton)rootView.findViewById(R.id.floatingActionButton);
-
-
-        floatingActionButton.startAnimation(fab_down);
-        LinearLayout listLayout=(LinearLayout)rootView.findViewById(R.id.listLiner);
 
         sendRequest();
         listView = (ListView) rootView.findViewById(R.id.listView);
@@ -81,15 +77,7 @@ public class Taxi extends Fragment {
             Log.e("TAXI:",taxi_array+"");
 
             listView.setAdapter(new TaxiAdapter(getActivity(),taxi_array));
-            listView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
-                @Override
-                public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
 
-
-                        floatingActionButton.setClickable(false);
-                        floatingActionButton.startAnimation(fab_down);
-                }
-            });
 
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
@@ -101,13 +89,9 @@ public class Taxi extends Fragment {
                     numbs=phone.getText().toString().trim().split(",");
 
 
-                    //floatingActionButton.setVisibility(View.VISIBLE);
 
-                    floatingActionButton.setClickable(true);
 
-                    floatingActionButton.startAnimation(fab_up);
-                    isFab=true;
-                   /* AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
+                   AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
                     LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                     View dialogView = inflater.inflate(R.layout.pop_up_for_taxi, null);
                     dialogBuilder.setView(dialogView);
@@ -138,7 +122,7 @@ public class Taxi extends Fragment {
                     });
                     AlertDialog alertDialog = dialogBuilder.create();
                     alertDialog.show();
-                    */
+
 
                 }
 
