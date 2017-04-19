@@ -12,13 +12,13 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.igor.depo.Adapters.CustomList;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -49,7 +49,7 @@ public class CityBus extends Fragment {
         try{
             ParseJSON pj = new ParseJSON(sharedPreferences.getString("city_bus",null));
             pj.parseJSON();
-            listView.setAdapter( new CustomList(getActivity(), two_d_array,1) );
+            listView.setAdapter( new CustomList(getActivity(), ParseJSON.result,1) );
         }catch (Exception e)
         {
             Log.e("Error", e.getMessage());
@@ -118,7 +118,9 @@ public class CityBus extends Fragment {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getActivity(),error.getMessage(), Toast.LENGTH_LONG).show();
+                        //Toast.makeText(getActivity(),error.getMessage(), Toast.LENGTH_LONG).show();
+                        Log.e("CityBusError:", error.getMessage()+"");
+
                     }
                 });
         RequestQueue requestQueue= Volley.newRequestQueue(getActivity());

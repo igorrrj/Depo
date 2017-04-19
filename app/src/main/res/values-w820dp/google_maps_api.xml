@@ -1,0 +1,21 @@
+<resources>
+    <!--
+    TODO: Before you run your application, you need a Google Maps API key.
+
+    To get one, follow this link, follow the directions and press "Create" at the end:
+
+    https://console.developers.google.com/flows/enableapi?apiid=maps_android_backend&keyType=CLIENT_SIDE_ANDROID&r=95:B0:24:84:C6:F6:AB:E5:F2:F3:45:80:7F:49:7B:85:BA:2B:73:F4%3Bcom.example.yarbit.myapplication
+
+    You can also add your credentials to an existing key, using this line:
+    95:B0:24:84:C6:F6:AB:E5:F2:F3:45:80:7F:49:7B:85:BA:2B:73:F4;com.example.yarbit.myapplication
+
+    Alternatively, follow the directions here:
+    https://developers.google.com/maps/documentation/android/start#get-key
+
+    Once you have your key (it starts with "AIza"), replace the "google_maps_key"
+    string in this file.
+    -->
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">
+        AIzaSyAI0EIRQ9bgKmc69RI_8-JjJ5w3g13SHGk
+    </string>
+</resources>

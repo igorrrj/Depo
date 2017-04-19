@@ -69,6 +69,8 @@
             android:layout_weight="7"
             android:orientation="vertical">
             <ImageView
+                android:visibility="invisible"
+
                 android:id="@+id/type_of_transport_imageView"
                 android:layout_width="40dp"
                 android:layout_height="40dp"

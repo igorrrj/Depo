@@ -18,10 +18,10 @@
         android:id="@+id/tabs"
         app:tabGravity="fill"
         app:tabMode="fixed"
-        android:background="@color/Cyan"
-        app:tabIndicatorColor="@color/Yellow"
-        app:tabSelectedTextColor="@color/Yellow"
-        app:tabTextColor="@color/White"
+        android:background="@color/apptheme_color"
+        app:tabIndicatorColor="@color/White"
+        app:tabSelectedTextColor="@color/White"
+        app:tabTextColor="@color/LightGrey"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 

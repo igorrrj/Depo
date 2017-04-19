@@ -1,4 +1,4 @@
-package com.example.igor.depo;
+package com.example.igor.depo.Adapters;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+
+import com.example.igor.depo.R;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

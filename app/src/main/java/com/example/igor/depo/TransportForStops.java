@@ -8,6 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
+
+import com.example.igor.depo.Adapters.TransportForStopsAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -25,8 +28,8 @@ public class TransportForStops  extends Fragment {
     SharedPreferences.Editor editor;
     private ListView listView;
     ArrayList<HashMap<String, String>> stops_array;
-    String str;
-
+    String str,stop_name;
+    TextView stop_nameTextView;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.transport_for_stops,container, false);
@@ -35,6 +38,8 @@ public class TransportForStops  extends Fragment {
         {
             str= bundle.getString("jslist");
             Log.e("STR:::::::::",str);
+            stop_name= bundle.getString("stop_name");
+
         }
         try {
 
@@ -63,6 +68,8 @@ public class TransportForStops  extends Fragment {
         Log.e("LLLLL::",stops_array+"");
 
         listView = (ListView) rootView.findViewById(R.id.listView);
+        stop_nameTextView=(TextView)rootView.findViewById(R.id.stop_name);
+        stop_nameTextView.setText(stop_name);
         listView.setAdapter(new TransportForStopsAdapter(getContext(),stops_array));
 
         return rootView;

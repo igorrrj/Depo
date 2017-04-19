@@ -1,4 +1,4 @@
-package com.example.igor.depo;
+package com.example.igor.depo.Adapters;
 
 import android.content.Context;
 import android.util.Log;
@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.igor.depo.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -52,7 +54,7 @@ public class TransportForStopsAdapter extends BaseAdapter {
         textViewDashe=(TextView)listViewItem.findViewById(R.id.dashe);
         textViewLastName = (TextView) listViewItem.findViewById(R.id.l_name);
         textViewNumbers = (TextView) listViewItem.findViewById(R.id.number_name);
-        imageViewType=(ImageView)listViewItem.findViewById(R.id.type_of_transport_imageView);
+        //imageViewType=(ImageView)listViewItem.findViewById(R.id.type_of_transport_imageView);
         try{
 
             map = result.get(position);
@@ -60,9 +62,9 @@ public class TransportForStopsAdapter extends BaseAdapter {
             textViewDashe.setText(" - ");
             textViewLastName.setText(map.get("last_name"));
             textViewNumbers.setText(map.get("number"));
-            if(map.get("type").equals("tram")){
+           /* if(map.get("type").equals("tram")){
                 imageViewType.setImageResource(R.drawable.icon_train);
-            }
+            }*/
             Log.e("ErrorList:",map.get("first_name") + " " + map.get("last_name")+ " "+map.get("number")+" ");
 
 

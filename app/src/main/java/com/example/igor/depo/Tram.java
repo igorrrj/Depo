@@ -12,13 +12,13 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.igor.depo.Adapters.CustomList;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -46,10 +46,17 @@ public class Tram extends Fragment {
 
         sendRequest();
         listView = (ListView) rootView.findViewById(R.id.listView);
+
+
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 TextView number=(TextView)view.findViewById(R.id.number_name);
+                TextView f_name=(TextView)view.findViewById(R.id.f_name);
+                TextView l_name=(TextView)view.findViewById(R.id.l_name);
+
+
                 String numb=number.getText().toString().trim();
                 Log.e("Tram Number:",numb);
 
@@ -57,16 +64,18 @@ public class Tram extends Fragment {
                 {
                     HashMap<String, String> map_d;
                     map_d = tram_routes_array.get(i);
-                    Log.e("Number:",map_d.get("number").toString().trim());
+                    Log.e("Number:",map_d.get("number").trim());
 
-                    if(numb.equals(map_d.get("number").toString().trim()))
+                    if(numb.equals(map_d.get("number").trim()))
                     {
                         Fragment fragment = null;
                         Class fragmentClass=TramRoute.class;
 
                         Bundle bundle=new Bundle();
                         bundle.putString("tram_route",map_d.get("route"));
-
+                        bundle.putString("tram_number",number.getText().toString().trim());
+                        bundle.putString("tram_f_name",f_name.getText().toString().trim());
+                        bundle.putString("tram_l_name",l_name.getText().toString().trim());
 
                         try {
                             fragment = (Fragment) fragmentClass.newInstance();
@@ -107,6 +116,8 @@ public class Tram extends Fragment {
                 map.put("type",dd.getString("type"));
                 map.put("number",dd.getString("number"));
                 map.put("route",dd.getString("route"));
+                map.put("first_name",dd.getString("first_name"));
+                map.put("last_name",dd.getString("last_name"));
                 tram_routes_array.add(map);
 
             }
@@ -139,8 +150,8 @@ public class Tram extends Fragment {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getActivity(),error.getMessage(), Toast.LENGTH_LONG).show();
-                        Log.e("Toast:", error.getMessage()+"");
+                      //  Toast.makeText(getActivity(),error.getMessage(), Toast.LENGTH_LONG).show();
+                        Log.e("TramError:", error.getMessage()+"");
 
                     }
                 });

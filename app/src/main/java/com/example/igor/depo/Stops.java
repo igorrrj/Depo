@@ -28,6 +28,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.igor.depo.Adapters.CustomList;
+import com.example.igor.depo.Adapters.StopsAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -199,6 +201,7 @@ public class Stops extends Fragment {
 
                 Bundle bundle=new Bundle();
                 bundle.putString("jslist",  jsarray.toString());
+                bundle.putString("stop_name", stop_name);
 
                 Log.e("NMB_FOR_STS:::",jsarray.toString());
 

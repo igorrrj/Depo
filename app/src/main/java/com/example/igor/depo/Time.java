@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import com.example.igor.depo.Adapters.TimeAdapter;
+
 /**
  * Created by Igor on 17.02.2017.
  */

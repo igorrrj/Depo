@@ -1,4 +1,4 @@
-package com.example.igor.depo;
+package com.example.igor.depo.Adapters;
 
 import android.content.Context;
 import android.util.Log;
@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
+
+import com.example.igor.depo.R;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -38,7 +40,7 @@ public class StopsAdapter extends BaseAdapter implements SectionIndexer{
         for(int i=0;i<arraylist.size();i++)
         {
             String []stops;
-            stops=arraylist.get(i).get("route").toString().trim().split(",");
+            stops=arraylist.get(i).get("route").trim().split(",");
 
             for(String s:stops)
                 stop_epta.add(s);
@@ -74,8 +76,15 @@ public class StopsAdapter extends BaseAdapter implements SectionIndexer{
         {
             String ch = result_string[i].substring(0, 1);
             ch = ch.toUpperCase();
-            if (!mapIndex.containsKey(ch))
-            mapIndex.put(ch,i);
+
+            if(isInteger(ch))
+                mapIndex.put("#",i);
+
+           else if (!mapIndex.containsKey(ch))
+            {
+                mapIndex.put(ch,i);
+            }
+
         }
 
         Set<String> sectionLetters = mapIndex.keySet();
@@ -91,6 +100,29 @@ public class StopsAdapter extends BaseAdapter implements SectionIndexer{
         sectionList.toArray(sections);
         //////////////////////////////
 
+    }
+    public static boolean isInteger(String str) {
+        if (str == null) {
+            return false;
+        }
+        int length = str.length();
+        if (length == 0) {
+            return false;
+        }
+        int i = 0;
+        if (str.charAt(0) == '-') {
+            if (length == 1) {
+                return false;
+            }
+            i = 1;
+        }
+        for (; i < length; i++) {
+            char c = str.charAt(i);
+            if (c < '0' || c > '9') {
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override

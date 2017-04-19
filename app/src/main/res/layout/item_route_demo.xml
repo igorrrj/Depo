@@ -23,7 +23,7 @@
         android:id="@+id/top_LinerLayout"
         android:layout_weight="1"
         android:gravity="center"
-        android:background="@color/Cyan"
+        android:background="@color/apptheme_color"
         android:layout_width="4dp"
         android:layout_height="match_parent"
         android:orientation="vertical" />
@@ -37,7 +37,7 @@
         android:id="@+id/bottom_LinerLayout"
         android:layout_weight="1"
         android:gravity="center"
-        android:background="@color/Cyan"
+        android:background="@color/apptheme_color"
         android:layout_width="4dp"
         android:layout_height="match_parent"
         android:orientation="vertical" />

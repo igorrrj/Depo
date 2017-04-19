@@ -14,6 +14,7 @@
         android:layout_height="match_parent" />
 
     <FrameLayout
+        android:elevation="10dp"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -23,11 +24,16 @@
 
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_view"
-        android:layout_width="wrap_content"
-
+        android:layout_width="200dp"
+        android:background="#34465d"
         android:layout_height="match_parent"
+        android:clickable="true"
         android:layout_gravity="start"
+        android:elevation="5dp"
+
+        app:itemTextColor="@color/White"
         android:fitsSystemWindows="true"
+        app:itemIconTint="@color/White"
         app:menu="@menu/activity_main_drawer"
         />
 

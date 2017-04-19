@@ -17,9 +17,13 @@
             android:icon="@drawable/ic_stops"
             android:title="Зупинки" />
         <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
+            android:id="@+id/nav_choosen"
+            android:icon="@drawable/ic_choosed"
+            android:title="Обране" />
+        <item
+            android:id="@+id/nav_plan"
+            android:icon="@drawable/date"
+            android:title="Спланувати" />
     </group>
 
     <item android:title="Communicate">
@@ -29,9 +33,9 @@
                 android:icon="@drawable/ic_menu_share"
                 android:title="Share" />
             <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
+                android:id="@+id/nav_map"
+                android:icon="@drawable/ic_map"
+                android:title="Map" />
         </menu>
     </item>
 

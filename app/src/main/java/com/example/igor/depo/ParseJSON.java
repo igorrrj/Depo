@@ -13,7 +13,7 @@ public class ParseJSON {
 
 
 
-    static ArrayList<ArrayList<HashMap<String, String>> >result;
+    public static ArrayList<ArrayList<HashMap<String, String>> >result;
 
     static ArrayList<HashMap<String, String>>result_demo;
 
@@ -42,7 +42,7 @@ public class ParseJSON {
         }
     }
 */
-    protected void parseJSON(){
+    public void parseJSON(){
         try {
 
              trams = new JSONArray(json);
@@ -53,7 +53,7 @@ public class ParseJSON {
                 {
                     JSONObject dd=jsonArray1.getJSONObject(j);
 
-                    Log.e("OBJ", dd.getString("first_name"));
+                    Log.e("ParseJson.Class.FirstName", dd.getString("first_name"));
 
                     HashMap<String,String>map=new HashMap<>();
 

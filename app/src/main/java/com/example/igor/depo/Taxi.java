@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -25,6 +26,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.igor.depo.Adapters.PopupTaxiAdapter;
+import com.example.igor.depo.Adapters.TaxiAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -38,14 +41,13 @@ import java.util.HashMap;
  */
 
 public class Taxi extends Fragment {
-
     SharedPreferences sharedPreferences;
+    MySQLite mySQLite;
     SharedPreferences.Editor editor;
     private ListView listView;
     String JsonString;
     Animation fab_up,fab_down;
     static boolean isFab;
-
     ArrayList<HashMap<String, String>> taxi_array;
 
     @Override
@@ -57,7 +59,7 @@ public class Taxi extends Fragment {
         sharedPreferences= getActivity().getSharedPreferences("save_taxi", Context.MODE_PRIVATE);
         try{
             ////////////////TAXI //////////////
-            taxi_array=new ArrayList<>();
+           /* taxi_array=new ArrayList<>();
             JSONArray trams = null;
             trams = new JSONArray(sharedPreferences.getString("taxi",null));
 
@@ -76,8 +78,8 @@ public class Taxi extends Fragment {
             }
             Log.e("TAXI:",taxi_array+"");
 
-            listView.setAdapter(new TaxiAdapter(getActivity(),taxi_array));
-
+        //    listView.setAdapter(new TaxiAdapter(getActivity(),mySQLite.Get_Taxi()));
+*/
 
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
@@ -87,9 +89,6 @@ public class Taxi extends Fragment {
                     TextView taxiName=(TextView)view.findViewById(R.id.taxi_name);
 
                     numbs=phone.getText().toString().trim().split(",");
-
-
-
 
                    AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
                     LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -144,7 +143,7 @@ public class Taxi extends Fragment {
         StringRequest stringRequest=new StringRequest("https://depocom.000webhostapp.com/index.php", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-
+                new AsyncTaxiDB(response).execute();
                 Log.e("Response", response);
                 try {
                     showJSON(response);
@@ -156,8 +155,12 @@ public class Taxi extends Fragment {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                       mySQLite=new MySQLite(getActivity());
+                        mySQLite.Get_Taxi();
+                        listView.setAdapter(new TaxiAdapter(getActivity(),mySQLite.arrayList));
+
                         Toast.makeText(getActivity(),error.getMessage(), Toast.LENGTH_LONG).show();
-                        Log.e("Toast:", error.getMessage()+"");
+                        Log.e("Error:", error.getMessage()+"");
 
                     }
                 });
@@ -166,7 +169,7 @@ public class Taxi extends Fragment {
     }
 
     private void showJSON(String json) throws JSONException {
-
+        AsyncTaxiDB asyncTaxiDB= (AsyncTaxiDB) new AsyncTaxiDB(json).execute();
 
         ////////////////TAXI //////////////
         taxi_array=new ArrayList<>();
@@ -186,16 +189,65 @@ public class Taxi extends Fragment {
             taxi_array.add(map);
 
         }
-        Log.e("TAXI:",taxi_array+"");
+        Log.e("TAXIsize:",taxi_array.size()+"");
+
 
         listView.setAdapter(new TaxiAdapter(getActivity(),taxi_array));
 
         /////////////////////
 
-        editor=sharedPreferences.edit();
-        editor.putString("taxi", json);
-        editor.apply();
-
 
     }
+
+    private class AsyncTaxiDB extends AsyncTask<Void,Void,Void> {
+        String json;
+
+        AsyncTaxiDB(String str) {
+            this.json = str;
+            Log.e("***Str***", this.json);
+
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            Log.e("***post***", "YES");
+
+        }
+
+
+        @Override
+        protected void onPreExecute() {
+            Log.e("***Pre***", "YES");
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            Log.e("***inbk***", "YES");
+            mySQLite = new MySQLite(getActivity());
+
+            try {
+
+                JSONArray trams = null;
+                trams = new JSONArray(json);
+
+                JSONArray jsonArray1 = trams.getJSONArray(4);
+                for (int j = 0; j < jsonArray1.length(); ++j) {
+                    JSONObject dd = jsonArray1.getJSONObject(j);
+
+                    HashMap<String, String> map = new HashMap<>();
+
+                    map.put("id", dd.getString("id"));
+                    map.put("name", dd.getString("name"));
+                    map.put("number", dd.getString("number"));
+                    if (mySQLite.arrayList.isEmpty())
+                        mySQLite.Add_Taxi(dd.getString("name"), dd.getString("number"));
+                    Log.e("***ASYNK***", dd.getString("name"));
+                }
+            } catch (JSONException e1) {
+                e1.printStackTrace();
+            }
+            return null;
+        }
+    }
+
 }

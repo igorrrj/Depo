@@ -1,4 +1,4 @@
-package com.example.igor.depo;
+package com.example.igor.depo.Adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+
+import com.example.igor.depo.R;
 
 /**
  * Created by Igor on 25.02.2017.
