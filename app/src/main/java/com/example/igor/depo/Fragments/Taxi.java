@@ -1,4 +1,4 @@
-package com.example.igor.depo;
+package com.example.igor.depo.Fragments;
 
 import android.Manifest;
 import android.content.Context;
@@ -28,6 +28,8 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.igor.depo.Adapters.PopupTaxiAdapter;
 import com.example.igor.depo.Adapters.TaxiAdapter;
+import com.example.igor.depo.MySQLite;
+import com.example.igor.depo.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;

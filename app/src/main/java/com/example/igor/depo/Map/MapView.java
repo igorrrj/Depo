@@ -1,4 +1,4 @@
-package com.example.igor.depo;
+package com.example.igor.depo.Map;
 
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -6,9 +6,11 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -18,6 +20,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.igor.depo.Fragments.PublicTransportTabFragment;
+import com.example.igor.depo.ParseJSON;
+import com.example.igor.depo.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -46,6 +50,7 @@ public class MapView extends Fragment implements OnMapReadyCallback {
     public static TabLayout tabLayout;
     public static ViewPager viewPager;
     public static int int_items = 2 ;
+    int isTouched=0;
     SlidingUpPanelLayout slidingUpPanelLayout;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -56,9 +61,27 @@ public class MapView extends Fragment implements OnMapReadyCallback {
         mMapView.onCreate(savedInstanceState);
         mMapView.getMapAsync(this); //this is important
         slidingUpPanelLayout = (SlidingUpPanelLayout)v.findViewById(R.id.sliding_layout);
+        slidingUpPanelLayout.setAnchorPoint(0.4f);
 
         tabLayout = (TabLayout) v.findViewById(R.id.tabs);
+
         viewPager = (ViewPager) v.findViewById(R.id.viewpager);
+
+        slidingUpPanelLayout.setOnTouchListener(new View.OnTouchListener() {
+               @Override
+               public boolean onTouch(View v, MotionEvent event) {
+                   isTouched=1;
+                   if(isTouched==1)
+                   {
+                       tabLayout.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.apptheme_color));
+                   }
+                   if(isTouched==0){
+                       tabLayout.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.White));
+                   }
+                   isTouched=0;
+                   return false;
+               }
+           });
 
         /**
          *Set an Apater for the View Pager
@@ -97,23 +120,6 @@ public class MapView extends Fragment implements OnMapReadyCallback {
                 .snippet("The most populous city in Australia.")
                 .position(sydney));
 
-
-
-
-        mGoogleMap.addPolyline(polylineOptions);
-
-        for(int i=0;i<coordsArray.size();i++)
-        {
-            CircleOptions circleOptions = new CircleOptions()
-                    .center(coordsArray.get(i))
-                    .radius(30)
-                    .strokeColor(Color.rgb(52,70,93))
-                    .fillColor(Color.rgb(52,70,93))
-                    .strokeWidth(4);
-
-            mGoogleMap.addCircle(circleOptions);
-        }
-        mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(coordsArray.get(0),13));
     }
 
     @Override
@@ -187,6 +193,14 @@ public class MapView extends Fragment implements OnMapReadyCallback {
             LatLng latLng=new LatLng(Double.parseDouble(dd.getString("latitude")),Double.parseDouble(dd.getString("longtitude")));
 
             coordsArray.add(latLng);
+            CircleOptions circleOptions = new CircleOptions()
+                    .center(latLng)
+                    .radius(30)
+                    .strokeColor(Color.rgb(52,70,93))
+                    .fillColor(Color.rgb(52,70,93))
+                    .strokeWidth(4);
+
+            mGoogleMap.addCircle(circleOptions);
 
         }
         Log.e("Coords",coordsArray.toString());
@@ -196,6 +210,12 @@ public class MapView extends Fragment implements OnMapReadyCallback {
         {
             Log.e("PolilineOptionsArray",coordsArray.toString());
             polylineOptions.addAll(coordsArray);
+            mGoogleMap.addPolyline(polylineOptions);
+
         }
+        mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(coordsArray.get(0),13));
+
     }
+
+
 }

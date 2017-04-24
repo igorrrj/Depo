@@ -1,4 +1,4 @@
-package com.example.igor.depo;
+package com.example.igor.depo.Fragments;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.example.igor.depo.Adapters.TimeAdapter;
+import com.example.igor.depo.R;
 
 /**
  * Created by Igor on 17.02.2017.

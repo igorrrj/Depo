@@ -17,6 +17,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.igor.depo.Fragments.CityBus;
+import com.example.igor.depo.Fragments.Tram;
+
 import java.util.ArrayList;
 
 public class IntersityTransportTabFragment extends Fragment {

@@ -16,6 +16,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import com.example.igor.depo.Fragments.PublicTransportTabFragment;
+import com.example.igor.depo.Fragments.Stops;
+import com.example.igor.depo.Fragments.Taxi;
+import com.example.igor.depo.Map.MapView;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     Toolbar toolbar;
@@ -130,7 +135,8 @@ public class MainActivity extends AppCompatActivity
             startActivity(new Intent(MainActivity.this,NotificationActivity.class));
         }
         else if (id == R.id.nav_map) {
-            startActivity(new Intent(MainActivity.this,MapView.class));
+            fragmentClass=MapView.class;
+            toolbar.setTitle("Спланувати");
         }
 
 

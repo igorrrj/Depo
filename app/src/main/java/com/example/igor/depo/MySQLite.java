@@ -16,7 +16,7 @@ import java.util.HashMap;
 
 public class MySQLite extends SQLiteOpenHelper {
     SQLiteDatabase db;
-    ArrayList<HashMap<String,String>>arrayList=new ArrayList<>();
+    public ArrayList<HashMap<String,String>>arrayList=new ArrayList<>();
     int cnt=0;
     final int DB_VERSION=2;
 
@@ -34,7 +34,7 @@ public class MySQLite extends SQLiteOpenHelper {
     }
 
 
-    void Add_Taxi(String name,String numb_name)
+    public void Add_Taxi(String name, String numb_name)
     {
 
         db = this.getWritableDatabase();
@@ -57,7 +57,7 @@ public class MySQLite extends SQLiteOpenHelper {
 
     }
 
-    ArrayList<HashMap<String,String>> Get_Taxi()
+    public ArrayList<HashMap<String,String>> Get_Taxi()
     {
         arrayList=new ArrayList<>();
                 db = this.getWritableDatabase();

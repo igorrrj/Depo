@@ -1,4 +1,4 @@
-package com.example.igor.depo;
+package com.example.igor.depo.Fragments;
 
 /**
  * Created by Igor on 19.10.2016.
@@ -16,6 +16,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.example.igor.depo.R;
 
 public class PublicTransportTabFragment extends Fragment {
 
@@ -60,7 +62,7 @@ public class PublicTransportTabFragment extends Fragment {
 
     }
 
-    static class MyAdapter extends FragmentPagerAdapter {
+    public static class MyAdapter extends FragmentPagerAdapter {
 
         public MyAdapter(FragmentManager fm) {
             super(fm);

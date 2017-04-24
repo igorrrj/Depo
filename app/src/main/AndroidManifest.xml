@@ -60,7 +60,6 @@
 
     <activity android:name=".NotificationActivity"
         android:theme="@style/NotifficationTheme" />
-        <activity android:name=".MapView" />
 
         <receiver android:name=".AlarmReceiver">
             <intent-filter>
@@ -71,11 +70,9 @@
 
 
 
-        <activity android:name=".MapView"/>
-
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_key" />
+            android:value="AIzaSyAI0EIRQ9bgKmc69RI_8-JjJ5w3g13SHGk" />
 
         <meta-data
             android:name="com.google.android.gms.version"

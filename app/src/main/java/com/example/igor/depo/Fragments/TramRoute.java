@@ -1,4 +1,4 @@
-package com.example.igor.depo;
+package com.example.igor.depo.Fragments;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -22,6 +22,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.igor.depo.Adapters.RoutesAdapter;
+import com.example.igor.depo.R;
 
 import java.util.HashMap;
 import java.util.Map;

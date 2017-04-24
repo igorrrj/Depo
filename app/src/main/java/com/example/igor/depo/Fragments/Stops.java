@@ -1,4 +1,4 @@
-package com.example.igor.depo;
+package com.example.igor.depo.Fragments;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -30,6 +30,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.igor.depo.Adapters.CustomList;
 import com.example.igor.depo.Adapters.StopsAdapter;
+import com.example.igor.depo.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;
