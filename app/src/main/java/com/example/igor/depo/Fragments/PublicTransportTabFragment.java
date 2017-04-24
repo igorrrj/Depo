@@ -60,7 +60,7 @@ public class PublicTransportTabFragment extends Fragment {
 
     }
 
-    class MyAdapter extends FragmentPagerAdapter {
+    static class MyAdapter extends FragmentPagerAdapter {
 
         public MyAdapter(FragmentManager fm) {
             super(fm);
