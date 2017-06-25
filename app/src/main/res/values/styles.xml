@@ -26,7 +26,6 @@
 
     <style name="MyCustomThemeDemo" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="android:windowFullscreen">true</item>
         <item name="android:windowTranslucentStatus">true</item>
         <item name="colorPrimary">@color/Red</item>
         <item name="colorPrimaryDark">@color/RedDark</item>
@@ -48,6 +47,13 @@
     </style>
 
     <style name="Date_Picker" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorPrimary">@color/Red</item>
+        <item name="colorPrimaryDark">@color/RedDark</item>
+        <item name="colorAccent">@color/Purple</item>
+
+    </style>
+
+    <style name="SettingsTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">@color/Red</item>
         <item name="colorPrimaryDark">@color/RedDark</item>
         <item name="colorAccent">@color/Purple</item>

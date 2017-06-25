@@ -32,6 +32,7 @@
 
         <!-- SLIDING LAYOUT -->
         <LinearLayout
+            android:clickable="true"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
@@ -49,9 +50,9 @@
                     app:tabGravity="fill"
                     app:tabMode="fixed"
                     android:background="@color/White"
-                    app:tabIndicatorColor="@color/White"
-                    app:tabSelectedTextColor="@color/White"
-                    app:tabTextColor="@color/LightGrey"
+                    app:tabIndicatorColor="@color/Purple"
+                    app:tabSelectedTextColor="@color/Purple"
+                    app:tabTextColor="@color/apptheme_color"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 

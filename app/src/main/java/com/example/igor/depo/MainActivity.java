@@ -1,7 +1,14 @@
 package com.example.igor.depo;
 
+import android.bluetooth.BluetoothAdapter;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -9,22 +16,65 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import com.example.igor.depo.Fragments.Liked;
 import com.example.igor.depo.Fragments.PublicTransportTabFragment;
 import com.example.igor.depo.Fragments.Stops;
 import com.example.igor.depo.Fragments.Taxi;
-import com.example.igor.depo.Map.MapView;
+import com.example.igor.depo.Preference.SettingsActivity;
+
+interface mInterface {
+    public void wifi();
+}
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, mInterface {
     Toolbar toolbar;
     FrameLayout frameLayout;
+
+    @Override
+    protected void onResume() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) (MainActivity.this)
+                .getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        if (networkInfo != null && networkInfo.isConnected()) {
+            // fetch data
+            Fragment fragment = null;
+            Class fragmentClass = null;
+            fragmentClass = PublicTransportTabFragment.class;
+            try {
+                fragment = (Fragment) fragmentClass.newInstance();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.content_main, new PublicTransportTabFragment()).commit();
+        } else {
+            // display error
+            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+            builder.setMessage("Please enable the internet connection")
+                    .setCancelable(false)
+                    .setNegativeButton("ОК",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            });
+            AlertDialog alert = builder.create();
+            alert.show();
+        }
+        super.onResume();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,24 +82,12 @@ public class MainActivity extends AppCompatActivity
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.hideOverflowMenu();
-
-
-        Fragment fragment = null;
-        Class fragmentClass = null;
-        fragmentClass = PublicTransportTabFragment.class;
-        try {
-            fragment = (Fragment) fragmentClass.newInstance();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.content_main, new PublicTransportTabFragment()).commit();
+        // final mInterface callback = this;
 
 
         final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         final ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close){
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
             @Override
             public void onDrawerSlide(View drawerView, float slideOffset) {
                 super.onDrawerSlide(drawerView, slideOffset);
@@ -69,7 +107,7 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-         frameLayout=(FrameLayout)findViewById(R.id.content_main);
+        frameLayout = (FrameLayout) findViewById(R.id.content_main);
 
     }
 
@@ -87,7 +125,6 @@ public class MainActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
-        menu.clear();
         return true;
     }
 
@@ -100,6 +137,7 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            // startActivity(new Intent(MainActivity.this, SettingsActivity.class));
             return true;
         }
 
@@ -116,27 +154,19 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_home) {
             // Handle the camera action
-            fragmentClass=PublicTransportTabFragment.class;
+            fragmentClass = PublicTransportTabFragment.class;
             toolbar.setTitle("Транспорт");
 
         } else if (id == R.id.nav_taxi) {
-            fragmentClass=Taxi.class;
+            fragmentClass = Taxi.class;
             toolbar.setTitle("Таксі");
         } else if (id == R.id.nav_stops) {
-            fragmentClass=Stops.class;
+            fragmentClass = Stops.class;
             toolbar.setTitle("Зупинки");
         } else if (id == R.id.nav_choosen) {
-            fragmentClass=Liked.class;
+            fragmentClass = Liked.class;
             toolbar.setTitle("Обране");
-        } else if (id == R.id.nav_plan) {
-            fragmentClass=PlanTrip.class;
-            toolbar.setTitle("Спланувати");
         } else if (id == R.id.nav_share) {
-            startActivity(new Intent(MainActivity.this,NotificationActivity.class));
-        }
-        else if (id == R.id.nav_map) {
-            fragmentClass=MapView.class;
-            toolbar.setTitle("Спланувати");
         }
 
 
@@ -145,8 +175,7 @@ public class MainActivity extends AppCompatActivity
         } catch (Exception e) {
             e.printStackTrace();
         }
-        if(fragment!=null)
-        {
+        if (fragment != null) {
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.content_main, fragment).commit();
 
@@ -155,5 +184,17 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void wifi() {
+
+        MainActivity.this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+
+
+            }
+        });
     }
 }

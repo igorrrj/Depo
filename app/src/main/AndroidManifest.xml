@@ -6,6 +6,9 @@
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
 
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
     <uses-feature android:glEsVersion="0x00020000"
@@ -58,18 +61,12 @@
 
         </activity>
 
-    <activity android:name=".NotificationActivity"
-        android:theme="@style/NotifficationTheme" />
-
-        <receiver android:name=".AlarmReceiver">
-            <intent-filter>
-                <action android:name="android.media.action.DISPLAY_NOTIFICATION" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </receiver>
-
-
-
+        <activity android:name=".activities.SelectedTramTabActivity"/>
+        <activity android:name=".activities.SelectedBusTabActivity"/>
+        <activity android:name=".activities.SelectedLikedTabActivity"/>
+        <activity android:name=".activities.SelectedTroleyBusTabActivity"/>
+        <activity android:name=".Preference.SettingsActivity"
+            android:theme="@style/SettingsTheme"/>
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAI0EIRQ9bgKmc69RI_8-JjJ5w3g13SHGk" />

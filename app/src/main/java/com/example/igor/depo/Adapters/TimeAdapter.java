@@ -25,6 +25,7 @@ public class TimeAdapter extends BaseAdapter {
     private Context context;
     String[] time;
     int gradient_position;
+
     public TimeAdapter(Context context, String t) {
         this.context = context;
         this.time = t.split(",");
@@ -36,32 +37,26 @@ public class TimeAdapter extends BaseAdapter {
         date.setTimeZone(TimeZone.getTimeZone("GMT+1:00"));
 
         String localTime = date.format(currentLocalTime);
-        String []split_time,split_devise_time;
-        split_devise_time=localTime.split(":");
+        String[] split_time, split_devise_time;
+        split_devise_time = localTime.split(":");
 
-        for(int i=0;i<time.length;i++)
-        {
+        for (int i = 0; i < time.length; i++) {
             String toSplit;
-            if(time[i].trim().contains("("))
-            {
-                toSplit=time[i].trim().substring(0,time[i].length()-time[i].lastIndexOf("(")-1);
-            }
-            else toSplit=time[i].trim();
-            split_time=toSplit.split("\\.");
-            Log.e("DEVISE: ",toSplit+"");
+            if (time[i].trim().contains("(")) {
+                toSplit = time[i].trim().substring(0, time[i].length() - time[i].lastIndexOf("(") - 1);
+            } else toSplit = time[i].trim();
+            split_time = toSplit.split("\\.");
+            Log.e("DEVISE: ", toSplit + "");
 
             //Log.e("SRING:",time_textView.getText().toString().trim()+"");
-            if( Integer.parseInt(split_time[0])== Integer.parseInt(split_devise_time[0]) &&
-                Integer.parseInt(split_time[1])>= Integer.parseInt(split_devise_time[1]) )
-            {
-                gradient_position=i;
-                Log.e("AAAA: ", gradient_position +" | "+time[i] );
+            if (Integer.parseInt(split_time[0]) == Integer.parseInt(split_devise_time[0]) &&
+                    Integer.parseInt(split_time[1]) >= Integer.parseInt(split_devise_time[1])) {
+                gradient_position = i;
+                Log.e("AAAA: ", gradient_position + " | " + time[i]);
                 break;
-            }
-            else if( Integer.parseInt(split_time[0])> Integer.parseInt(split_devise_time[0]) )
-            {
-                gradient_position=i;
-                Log.e("AAAA: ", gradient_position +" | "+time[i] );
+            } else if (Integer.parseInt(split_time[0]) > Integer.parseInt(split_devise_time[0])) {
+                gradient_position = i;
+                Log.e("AAAA: ", gradient_position + " | " + time[i]);
                 break;
             }
 
@@ -85,13 +80,12 @@ public class TimeAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View listViewItem = inflater.inflate(R.layout.item_city_bus_time, parent, false);
-        TextView time_textView=(TextView)listViewItem.findViewById(R.id.time_textView);
+        TextView time_textView = (TextView) listViewItem.findViewById(R.id.time_textView);
         time_textView.setText(time[position]);
 
-        if(position==gradient_position)
-        {
+        if (position == gradient_position) {
             listViewItem.setBackgroundColor(Color.CYAN);
         }
 

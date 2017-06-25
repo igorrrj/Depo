@@ -1,7 +1,9 @@
 package com.example.igor.depo.Fragments;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -45,20 +47,18 @@ import java.util.HashMap;
 
 public class Stops extends Fragment {
 
-    SharedPreferences sharedPreferences;
-    SharedPreferences.Editor editor;
     private ListView listView;
-    CustomList cl;
     String JsonString;
     ArrayList<HashMap<String, String>> stops_array;
     ImageView loop;
     Toolbar mtoolbar;
     EditText msearch;
-    ScrollView scrollView;
+    ProgressDialog progressDialog;
+
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.main, menu);
+        inflater.inflate(R.menu.search_menu, menu);
         MenuItem mSearchMenuItem = menu.findItem(R.id.action_search);
         SearchView searchView = (SearchView) mSearchMenuItem.getActionView();
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -86,6 +86,11 @@ public class Stops extends Fragment {
                             map.put("route",s);
                             map.put("first_name",hm.get("first_name"));
                             map.put("last_name",hm.get("last_name"));
+                            map.put("begin_time",hm.get("begin_time"));
+                            map.put("end_time",hm.get("end_time"));
+                            map.put("from_depo",hm.get("from_depo"));
+                            map.put("to_depo",hm.get("to_depo"));
+                            map.put("time_interval",hm.get("time_interval"));
 
                             templist.add(map);
                         }
@@ -99,14 +104,6 @@ public class Stops extends Fragment {
     }
 
     @Override
-    public void onPrepareOptionsMenu(Menu menu) {
-
-
-    }
-
-
-
-    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
@@ -115,50 +112,14 @@ public class Stops extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.stops,container, false);
-        //loop=(ImageView)rootView.findViewById(R.id.loop);
-       // msearch=(EditText)rootView.findViewById(R.id.editText) ;
-        sendRequest();
+
+        openLoadingDialog();
+
+        new StopsTask().execute();
 
         listView = (ListView) rootView.findViewById(R.id.listView);
         listView.setFastScrollEnabled(true);
         listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-        sharedPreferences= getActivity().getSharedPreferences("save_stops", Context.MODE_PRIVATE);
-        try{
-
-
-            //////////////// ROUTES //////////////
-            stops_array=new ArrayList<>();
-            JSONArray trams = null;
-            trams = new JSONArray(sharedPreferences.getString("edit_stops",null));
-
-            JSONArray jsonArray1 = trams.getJSONArray(3);
-            for(int j=0;j<jsonArray1.length();++j)
-            {
-                JSONObject dd=jsonArray1.getJSONObject(j);
-
-                HashMap<String,String>map=new HashMap<>();
-
-                map.put("id",dd.getString("id"));
-                map.put("type",dd.getString("type"));
-                map.put("number",dd.getString("number"));
-                map.put("route",dd.getString("route"));
-                map.put("first_name",dd.getString("first_name"));
-                map.put("last_name",dd.getString("last_name"));
-
-                stops_array.add(map);
-
-            }
-            listView.setAdapter(new StopsAdapter(getActivity(),stops_array));
-            listView.setFastScrollEnabled(true);
-
-            Log.e("ROUT:",stops_array+"");
-        }catch (Exception e)
-        {
-            Log.e("Error", e.getMessage());
-            e.printStackTrace();
-        }
-
-
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -173,7 +134,12 @@ public class Stops extends Fragment {
 
                     for(int j=0;j<stops.length;j++)
                     {
-                        if(stop_name.equals(stops[j].trim()))
+                        stops[j]=stops[j].trim();
+                    }
+
+                    for(int j=0;j<stops.length;j++)
+                    {
+                        if(stop_name.equals(stops[j]))
                         {
                             JSONObject jsonObj= new JSONObject();
 
@@ -183,6 +149,13 @@ public class Stops extends Fragment {
                                 jsonObj.put("number",stops_array.get(i).get("number"));
                                 jsonObj.put("first_name",stops_array.get(i).get("first_name"));
                                 jsonObj.put("last_name",stops_array.get(i).get("last_name"));
+                                jsonObj.put("route",stops_array.get(i).get("route"));
+                                jsonObj.put("begin_time",stops_array.get(i).get("begin_time"));
+                                jsonObj.put("end_time",stops_array.get(i).get("end_time"));
+                                jsonObj.put("from_depo",stops_array.get(i).get("from_depo"));
+                                jsonObj.put("to_depo",stops_array.get(i).get("to_depo"));
+                                jsonObj.put("time_interval",stops_array.get(i).get("time_interval"));
+
                                 jsarray.put(jsonObj);
 
                             } catch (JSONException e) {
@@ -192,10 +165,6 @@ public class Stops extends Fragment {
 
                         }
                     }
-
-
-
-
                 }
                 Fragment fragment = null;
                 Class fragmentClass=TransportForStops.class;
@@ -204,8 +173,6 @@ public class Stops extends Fragment {
                 bundle.putString("jslist",  jsarray.toString());
                 bundle.putString("stop_name", stop_name);
 
-                Log.e("NMB_FOR_STS:::",jsarray.toString());
-
                 try {
                     fragment = (Fragment) fragmentClass.newInstance();
                     fragment.setArguments(bundle);
@@ -213,8 +180,6 @@ public class Stops extends Fragment {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
-
                 FragmentManager fragmentManager = (getActivity()).getSupportFragmentManager();
                 fragmentManager.beginTransaction().replace(R.id.content_main, fragment).commit();
 
@@ -225,15 +190,39 @@ public class Stops extends Fragment {
 
         return rootView;
     }
+    class StopsTask extends AsyncTask<String,Void,Void> {
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+        }
 
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            super.onProgressUpdate(values);
+        }
+
+        @Override
+        protected Void doInBackground(String... strings) {
+            sendRequest();
+            return null;
+        }
+    }
    private void sendRequest(){
-        StringRequest stringRequest=new StringRequest("https://depocom.000webhostapp.com/index.php", new Response.Listener<String>() {
+        StringRequest stringRequest=new StringRequest("https://depocom.000webhostapp.com/routes.php", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
 
                 Log.e("Response", response);
                 try {
                     showJSON(response);
+                    if (progressDialog != null) {
+                        progressDialog.dismiss();
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -242,9 +231,10 @@ public class Stops extends Fragment {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getActivity(),error.getMessage(), Toast.LENGTH_LONG).show();
-                        Log.e("Toast:", error.getMessage()+"");
-
+                        Log.e("topsError:", error.getMessage()+"");
+                        if (progressDialog != null) {
+                            progressDialog.dismiss();
+                        }
                     }
                 });
         RequestQueue requestQueue= Volley.newRequestQueue(getActivity());
@@ -253,38 +243,46 @@ public class Stops extends Fragment {
 
     private void showJSON(String json) throws JSONException {
 
-
-        /////////////////////
-
-        editor=sharedPreferences.edit();
-        editor.putString("edit_stops", json);
-        editor.apply();
-
-
         //////////////// ROUTES //////////////
         stops_array=new ArrayList<>();
-        JSONArray trams = null;
-        trams = new JSONArray(json);
-
-        JSONArray jsonArray1 = trams.getJSONArray(3);
-        for(int j=0;j<jsonArray1.length();++j)
+        JSONArray json_stops = new JSONArray(json);
+        for(int i=0;i<json_stops.length();i++)
         {
-            JSONObject dd=jsonArray1.getJSONObject(j);
+            JSONArray jsonArrayj = json_stops.getJSONArray(i);
 
-            HashMap<String,String>map=new HashMap<>();
+            for(int j=0;j<jsonArrayj.length();++j)
+            {
+                JSONObject dd=jsonArrayj.getJSONObject(j);
 
-            map.put("id",dd.getString("id"));
-            map.put("type",dd.getString("type"));
-            map.put("number",dd.getString("number"));
-            map.put("route",dd.getString("route"));
-            map.put("first_name",dd.getString("first_name"));
-            map.put("last_name",dd.getString("last_name"));
-            stops_array.add(map);
+                HashMap<String,String>map=new HashMap<>();
 
+                map.put("id",dd.getString("id"));
+                map.put("type",dd.getString("type"));
+                map.put("number",dd.getString("number"));
+                map.put("route",dd.getString("route"));
+                map.put("first_name",dd.getString("first_name"));
+                map.put("last_name",dd.getString("last_name"));
+                map.put("begin_time",dd.getString("begin_time"));
+                map.put("end_time",dd.getString("end_time"));
+                map.put("from_depo",dd.getString("from_depo"));
+                map.put("to_depo",dd.getString("to_depo"));
+                map.put("time_interval",dd.getString("time_interval"));
+
+                stops_array.add(map);
+
+            }
         }
-        Log.e("ROUT:",stops_array+"");
+
+        Log.e("StopsArraySize:",stops_array.size()+"");
+        Log.e("StopsArray:",stops_array.toString());
         listView.setAdapter(new StopsAdapter(getActivity(),stops_array));
         listView.setFastScrollEnabled(true);
-
+    }
+    void openLoadingDialog() {
+        progressDialog=new ProgressDialog(getContext());
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setMessage( getString(R.string.dialog_message) );
+        progressDialog.setCancelable(false);
+        progressDialog.show();
     }
 }

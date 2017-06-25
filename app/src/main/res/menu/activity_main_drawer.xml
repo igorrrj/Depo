@@ -20,10 +20,7 @@
             android:id="@+id/nav_choosen"
             android:icon="@drawable/ic_choosed"
             android:title="Обране" />
-        <item
-            android:id="@+id/nav_plan"
-            android:icon="@drawable/date"
-            android:title="Спланувати" />
+
     </group>
 
     <item android:title="Communicate">
@@ -32,10 +29,6 @@
                 android:id="@+id/nav_share"
                 android:icon="@drawable/ic_menu_share"
                 android:title="Share" />
-            <item
-                android:id="@+id/nav_map"
-                android:icon="@drawable/ic_map"
-                android:title="Map" />
         </menu>
     </item>
 
