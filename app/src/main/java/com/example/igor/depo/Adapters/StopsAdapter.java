@@ -43,7 +43,7 @@ public class StopsAdapter extends BaseAdapter implements SectionIndexer{
             stops=arraylist.get(i).get("route").trim().split(",");
 
             for(String s:stops)
-                stop_epta.add(s);
+                stop_epta.add(s.trim());
         }
 
 

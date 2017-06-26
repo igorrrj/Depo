@@ -47,6 +47,7 @@ public class Taxi extends Fragment {
     MySQLite mySQLite;
     SharedPreferences.Editor editor;
     private ListView listView;
+    TextView error_text;
     String JsonString;
     Animation fab_up,fab_down;
     static boolean isFab;
@@ -61,6 +62,7 @@ public class Taxi extends Fragment {
 
         new TaxiTask().execute();
         listView = (ListView) rootView.findViewById(R.id.listView);
+        error_text=(TextView)rootView.findViewById(R.id.error_text);
         try{
 
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -115,6 +117,8 @@ public class Taxi extends Fragment {
                     if (progressDialog != null) {
                         progressDialog.dismiss();
                     }
+                    error_text.setVisibility(View.GONE);
+                    listView.setVisibility(View.VISIBLE);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -126,6 +130,8 @@ public class Taxi extends Fragment {
                         if (progressDialog != null) {
                             progressDialog.dismiss();
                         }
+                        error_text.setVisibility(View.VISIBLE);
+                        listView.setVisibility(View.GONE);
                         Log.e("TaxiError:", error.getMessage()+"");
 
                     }

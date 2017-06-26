@@ -30,6 +30,8 @@ import com.example.igor.depo.Fragments.PublicTransportTabFragment;
 import com.example.igor.depo.Fragments.Stops;
 import com.example.igor.depo.Fragments.Taxi;
 import com.example.igor.depo.Preference.SettingsActivity;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 interface mInterface {
     public void wifi();
@@ -40,6 +42,8 @@ public class MainActivity extends AppCompatActivity
     Toolbar toolbar;
     FrameLayout frameLayout;
 
+    private static final String TAG = "MainActivity";
+    private AdView mAdView;
     @Override
     protected void onResume() {
         ConnectivityManager connectivityManager = (ConnectivityManager) (MainActivity.this)
@@ -58,15 +62,21 @@ public class MainActivity extends AppCompatActivity
 
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.content_main, new PublicTransportTabFragment()).commit();
+
+            mAdView = (AdView) findViewById(R.id.adView);
+            AdRequest adRequest = new AdRequest.Builder().build();
+            mAdView.loadAd(adRequest);
+
         } else {
             // display error
             AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-            builder.setMessage("Please enable the internet connection")
-                    .setCancelable(false)
-                    .setNegativeButton("ОК",
+            builder.setMessage("Ввімкніть мережеве з'єднання")
+                    .setCancelable(true)
+                    .setNegativeButton("Добре",
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
                                     dialog.cancel();
+                                    startActivityForResult(new Intent(android.provider.Settings.ACTION_SETTINGS), 0);
                                 }
                             });
             AlertDialog alert = builder.create();
@@ -117,7 +127,22 @@ public class MainActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            final AlertDialog builder=new AlertDialog.Builder(MainActivity.this)
+                    .setMessage("Ви впевнені що хочете вийти?")
+                    .setPositiveButton("Так", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            finish();
+                        }
+                    })
+                    .setNegativeButton("Ні", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                          dialogInterface.cancel();
+                        }
+                    })
+                    .setCancelable(true)
+                    .show();
         }
     }
 
@@ -138,6 +163,7 @@ public class MainActivity extends AppCompatActivity
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             // startActivity(new Intent(MainActivity.this, SettingsActivity.class));
+            finish();
             return true;
         }
 
@@ -166,7 +192,6 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_choosen) {
             fragmentClass = Liked.class;
             toolbar.setTitle("Обране");
-        } else if (id == R.id.nav_share) {
         }
 
 

@@ -19,6 +19,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -38,6 +40,8 @@ public class PublicTransportTabFragment extends Fragment {
     public static ViewPager viewPager;
     public static int int_items = 3 ;
     ProgressDialog progressDialog;
+    TextView error_text;
+    LinearLayout linearLayout;
     static String json;
         @Nullable
         @Override
@@ -56,9 +60,12 @@ public class PublicTransportTabFragment extends Fragment {
             tabLayout = (TabLayout) x.findViewById(R.id.tabs);
             viewPager = (ViewPager) x.findViewById(R.id.viewpager);
 
-        /**
-         *Set an Apater for the View Pager
-         */
+            error_text=(TextView)x.findViewById(R.id.error_text);
+            linearLayout=(LinearLayout)x.findViewById(R.id.tab_liner);
+
+            /**
+             *Set an Apater for the View Pager
+             */
 
         /**
          * Now , this is a workaround ,
@@ -183,6 +190,8 @@ public class PublicTransportTabFragment extends Fragment {
                 if (progressDialog != null) {
                         progressDialog.dismiss();
                     }
+                error_text.setVisibility(View.GONE);
+                linearLayout.setVisibility(View.VISIBLE);
 
                  }
         },
@@ -192,7 +201,9 @@ public class PublicTransportTabFragment extends Fragment {
                         if (progressDialog != null) {
                             progressDialog.dismiss();
                         }
-                        Log.e("TransportError:", error.getMessage()+"");
+                        Log.e("TransportTabError:", error.getMessage()+"");
+                        error_text.setVisibility(View.VISIBLE);
+                        linearLayout.setVisibility(View.GONE);
                     }
                 });
         RequestQueue requestQueue= Volley.newRequestQueue(getActivity());

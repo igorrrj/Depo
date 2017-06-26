@@ -165,7 +165,7 @@ public class MapView extends Fragment implements OnMapReadyCallback , LocationLi
                 MarkerOptions options = new MarkerOptions();
 
                 // Setting the position of the marker
-                options.position(point);
+                //options.position(point);
 
                 /**
                  * For the start location, the color of marker is GREEN and
@@ -473,8 +473,6 @@ public class MapView extends Fragment implements OnMapReadyCallback , LocationLi
             }
         }
     }
-
-
 
 
 

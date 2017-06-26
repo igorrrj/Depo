@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "498526692961",
+    "firebase_url": "https://vinway-be968.firebaseio.com",
+    "project_id": "vinway-be968",
+    "storage_bucket": "vinway-be968.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:498526692961:android:f51ae524a1dbe447",
+        "android_client_info": {
+          "package_name": "com.example.igor.depo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "498526692961-djubbpa759dfjt33k3uvef5dkqcp75ec.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.igor.depo",
+            "certificate_hash": "a391d93d97977c41be6f4cd77418ad3ee9461f64"
+          }
+        },
+        {
+          "client_id": "498526692961-pro3brhr1e3rb687lkitaat2topjg562.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBMKa2RT-e8UOq7M_jLpav-h_VzvVTHTTQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "498526692961-pro3brhr1e3rb687lkitaat2topjg562.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
