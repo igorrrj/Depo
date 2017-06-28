@@ -19,10 +19,10 @@ public class LikedSQLite extends SQLiteOpenHelper {
     SQLiteDatabase db;
     private ArrayList<HashMap<String,String>>arrayList=new ArrayList<>();
     int cnt=0;
-    final int DB_VERSION=2;
+    final int DB_VERSION=1;
 
     public LikedSQLite(Context context){
-        super(context,"myDB",null,1);
+        super(context,"myDB",null,2);
     }
 
     public void create_table()

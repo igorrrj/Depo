@@ -67,6 +67,8 @@
         <activity android:name=".activities.SelectedTroleyBusTabActivity"/>
         <activity android:name=".Preference.SettingsActivity"
             android:theme="@style/SettingsTheme"/>
+        <activity android:name=".activities.TransportForStopsActivity"/>
+        <activity android:name=".activities.SelectedLikedStopActivity"/>
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAI0EIRQ9bgKmc69RI_8-JjJ5w3g13SHGk" />

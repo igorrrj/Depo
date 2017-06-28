@@ -2,6 +2,7 @@ package com.example.igor.depo.Fragments;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -33,6 +34,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.igor.depo.Adapters.CustomList;
 import com.example.igor.depo.Adapters.StopsAdapter;
 import com.example.igor.depo.R;
+import com.example.igor.depo.activities.TransportForStopsActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -121,7 +123,7 @@ public class Stops extends Fragment {
         listView = (ListView) rootView.findViewById(R.id.listView);
         listView.setFastScrollEnabled(true);
         listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-        error_text=(TextView)rootView.findViewById(R.id.error_text);
+        error_text = (TextView) rootView.findViewById(R.id.error_text);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -164,6 +166,7 @@ public class Stops extends Fragment {
                         }
                     }
                 }
+                /*
                 Fragment fragment = null;
                 Class fragmentClass = TransportForStops.class;
 
@@ -180,7 +183,12 @@ public class Stops extends Fragment {
                 }
                 FragmentManager fragmentManager = (getActivity()).getSupportFragmentManager();
                 fragmentManager.beginTransaction().replace(R.id.content_main, fragment).commit();
+                */
 
+                Intent intent = new Intent(getActivity(), TransportForStopsActivity.class);
+                intent.putExtra("jslist", jsarray.toString());
+                intent.putExtra("stop_name", stop_name);
+                startActivity(intent);
 
             }
         });
@@ -250,7 +258,7 @@ public class Stops extends Fragment {
         //////////////// ROUTES //////////////
         stops_array = new ArrayList<>();
         JSONArray json_stops = new JSONArray(json);
-        Log.e("JSonSTopsLength",json_stops.length()+"");
+        Log.e("JSonSTopsLength", json_stops.length() + "");
         for (int i = 0; i < json_stops.length(); i++) {
             JSONArray jsonArrayj = json_stops.getJSONArray(i);
 

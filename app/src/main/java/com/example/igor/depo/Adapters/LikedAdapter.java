@@ -74,7 +74,7 @@ public class LikedAdapter extends BaseAdapter {
             textViewDashe.setText(" - ");
             textViewLastName.setText(map.get("last_name"));
             textViewNumbers.setText(map.get("number"));
-            Log.e("LikedList:",map.get("first_name") + " " + map.get("last_name")+ " "+map.get("number")+" ");
+            Log.e("LikedList:",map.get("first_name") + " " + map.get("last_name")+ " "+map.get("number")+" "+map.get("type"));
 
             for(int i=0;i<sections_list.size();i++)
             {
@@ -86,7 +86,7 @@ public class LikedAdapter extends BaseAdapter {
                     break;
                 }
             }
-            Log.e("InSection",sections_list+"");
+            Log.e("Section",sections_list+"");
         }catch (Exception e) {
             Log.e("ErrorList:", e.getMessage());
             e.printStackTrace();

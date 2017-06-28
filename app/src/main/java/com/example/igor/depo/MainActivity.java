@@ -44,30 +44,14 @@ public class MainActivity extends AppCompatActivity
 
     private static final String TAG = "MainActivity";
     private AdView mAdView;
+/*
     @Override
     protected void onResume() {
         ConnectivityManager connectivityManager = (ConnectivityManager) (MainActivity.this)
                 .getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-        if (networkInfo != null && networkInfo.isConnected()) {
-            // fetch data
-            Fragment fragment = null;
-            Class fragmentClass = null;
-            fragmentClass = PublicTransportTabFragment.class;
-            try {
-                fragment = (Fragment) fragmentClass.newInstance();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        if (networkInfo == null && !networkInfo.isConnected()) {
 
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.content_main, new PublicTransportTabFragment()).commit();
-
-            mAdView = (AdView) findViewById(R.id.adView);
-            AdRequest adRequest = new AdRequest.Builder().build();
-            mAdView.loadAd(adRequest);
-
-        } else {
             // display error
             AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
             builder.setMessage("Ввімкніть мережеве з'єднання")
@@ -84,14 +68,18 @@ public class MainActivity extends AppCompatActivity
         }
         super.onResume();
     }
-
+*/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        toolbar.hideOverflowMenu();
+        //toolbar.hideOverflowMenu();
+
+
+
         // final mInterface callback = this;
 
 
@@ -119,6 +107,22 @@ public class MainActivity extends AppCompatActivity
 
         frameLayout = (FrameLayout) findViewById(R.id.content_main);
 
+        Fragment fragment = null;
+        Class fragmentClass = null;
+        fragmentClass = PublicTransportTabFragment.class;
+        try {
+            fragment = (Fragment) fragmentClass.newInstance();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.content_main, new PublicTransportTabFragment()).commit();
+
+        mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+
     }
 
     @Override
@@ -127,7 +131,7 @@ public class MainActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            final AlertDialog builder=new AlertDialog.Builder(MainActivity.this)
+            final AlertDialog builder = new AlertDialog.Builder(MainActivity.this)
                     .setMessage("Ви впевнені що хочете вийти?")
                     .setPositiveButton("Так", new DialogInterface.OnClickListener() {
                         @Override
@@ -138,7 +142,7 @@ public class MainActivity extends AppCompatActivity
                     .setNegativeButton("Ні", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                          dialogInterface.cancel();
+                            dialogInterface.cancel();
                         }
                     })
                     .setCancelable(true)
@@ -191,7 +195,7 @@ public class MainActivity extends AppCompatActivity
             toolbar.setTitle("Зупинки");
         } else if (id == R.id.nav_choosen) {
             fragmentClass = Liked.class;
-            toolbar.setTitle("Обране");
+            toolbar.setTitle("");
         }
 
 

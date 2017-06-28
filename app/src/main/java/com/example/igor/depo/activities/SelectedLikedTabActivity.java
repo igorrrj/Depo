@@ -37,6 +37,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import static com.example.igor.depo.Fragments.Liked_Transport_Fragment.DELETE;
+import static com.example.igor.depo.Fragments.Liked_Transport_Fragment.NOT_DELETE;
+
 public class SelectedLikedTabActivity extends AppCompatActivity {
 
     public static TabLayout tabLayout;
@@ -182,23 +185,22 @@ public class SelectedLikedTabActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
         Log.e("ANS",ans+"");
         LikedSQLite likedSQLite= new LikedSQLite(this);
-      /*  if(ans && !rout.equals(""))
-        {
-            likedSQLite.Add_Item(f_name,l_name,type,number_name,rout,
-                    begin_time,end_time,from_depo,
-                    to_depo,time_interval);
-        }
-        else */
+
       if(!ans){
             likedSQLite.Delete_Item(number_name,type);
-          setResult(Activity.RESULT_OK);
-        }
-        else{
-          setResult(RESULT_CANCELED);
+            getIntent().putExtra("result",DELETE);
       }
+     else{
+          getIntent().putExtra("result",NOT_DELETE);
+      }
+        Log.e("RESULT_OK",getIntent().getExtras().getInt("result")+"");
+        setResult(RESULT_OK, getIntent());
+        finish();
+
+        //super.onBackPressed();
+
     }
 
     boolean ans = false;
@@ -229,7 +231,6 @@ public class SelectedLikedTabActivity extends AppCompatActivity {
     }
 
 
-
     void openLoadingDialog() {
         progressDialog=new ProgressDialog(this);
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
@@ -237,7 +238,6 @@ public class SelectedLikedTabActivity extends AppCompatActivity {
         progressDialog.setCancelable(false);
         progressDialog.show();
     }
-
 
 }
 

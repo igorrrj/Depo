@@ -38,34 +38,35 @@ public class PublicTransportTabFragment extends Fragment {
 
     public static TabLayout tabLayout;
     public static ViewPager viewPager;
-    public static int int_items = 3 ;
+    public static int int_items = 3;
     ProgressDialog progressDialog;
     TextView error_text;
     LinearLayout linearLayout;
     static String json;
-        @Nullable
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-            /**
-             *Inflate tab_layout and setup Views.
-             */
 
-            new TransportTask().execute();
-            openLoadingDialog();
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        /**
+         *Inflate tab_layout and setup Views.
+         */
 
-            View x =  inflater.inflate(R.layout.public_transport_tab_layout,null);
+        new TransportTask().execute();
+        openLoadingDialog();
 
-            ((AppCompatActivity)getActivity()).getSupportActionBar().setElevation(0);
+        View x = inflater.inflate(R.layout.public_transport_tab_layout, null);
 
-            tabLayout = (TabLayout) x.findViewById(R.id.tabs);
-            viewPager = (ViewPager) x.findViewById(R.id.viewpager);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setElevation(0);
 
-            error_text=(TextView)x.findViewById(R.id.error_text);
-            linearLayout=(LinearLayout)x.findViewById(R.id.tab_liner);
+        tabLayout = (TabLayout) x.findViewById(R.id.tabs);
+        viewPager = (ViewPager) x.findViewById(R.id.viewpager);
 
-            /**
-             *Set an Apater for the View Pager
-             */
+        error_text = (TextView) x.findViewById(R.id.error_text);
+        linearLayout = (LinearLayout) x.findViewById(R.id.tab_liner);
+
+        /**
+         *Set an Apater for the View Pager
+         */
 
         /**
          * Now , this is a workaround ,
@@ -95,32 +96,29 @@ public class PublicTransportTabFragment extends Fragment {
          */
 
         @Override
-        public Fragment getItem(int position)
-        {
-            switch (position){
-                case 0 :{
-                    Bundle bundle=new Bundle();
-                    bundle.putString("json",json);
-                    Log.e("JsonTram",json);
-                    Fragment fragment=new Tram();
+        public Fragment getItem(int position) {
+            switch (position) {
+                case 0: {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("json", json);
+                    Log.e("JsonTram", json);
+                    Fragment fragment = new Tram();
                     fragment.setArguments(bundle);
                     return fragment;
                 }
-                case 1 :
-                {
-                    Bundle bundle=new Bundle();
-                    bundle.putString("json",json);
-                    Log.e("JsonTroley",json);
-                    Fragment fragment=new TroleyBus();
+                case 1: {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("json", json);
+                    Log.e("JsonTroley", json);
+                    Fragment fragment = new TroleyBus();
                     fragment.setArguments(bundle);
                     return fragment;
                 }
-                case 2 :
-                {
-                    Bundle bundle=new Bundle();
-                    bundle.putString("json",json);
-                    Log.e("JsonBus",json);
-                    Fragment fragment=new CityBus();
+                case 2: {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("json", json);
+                    Log.e("JsonBus", json);
+                    Fragment fragment = new CityBus();
                     fragment.setArguments(bundle);
                     return fragment;
                 }
@@ -136,6 +134,7 @@ public class PublicTransportTabFragment extends Fragment {
             return int_items;
 
         }
+
         /**
          * This method returns the title of the tab according to the position.
          */
@@ -143,12 +142,12 @@ public class PublicTransportTabFragment extends Fragment {
         @Override
         public CharSequence getPageTitle(int position) {
 
-            switch (position){
-                case 0 :
+            switch (position) {
+                case 0:
                     return "Трамвай";
-                case 1 :
+                case 1:
                     return "Тролейбус";
-                case 2 :
+                case 2:
                     return "Автобус";
             }
             return null;
@@ -156,7 +155,7 @@ public class PublicTransportTabFragment extends Fragment {
     }
 
 
-    class TransportTask extends AsyncTask<String,Void,Void> {
+    class TransportTask extends AsyncTask<String, Void, Void> {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
@@ -179,21 +178,21 @@ public class PublicTransportTabFragment extends Fragment {
         }
     }
 
-    private void sendRequest(){
-        StringRequest stringRequest=new StringRequest("https://depocom.000webhostapp.com/transport.php", new Response.Listener<String>() {
+    private void sendRequest() {
+        StringRequest stringRequest = new StringRequest("https://depocom.000webhostapp.com/transport.php", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.e("Response", response);
-                    json=response;
-                    viewPager.setAdapter(new MyAdapter(getChildFragmentManager()));
+                json = response;
+                viewPager.setAdapter(new MyAdapter(getChildFragmentManager()));
 
                 if (progressDialog != null) {
-                        progressDialog.dismiss();
-                    }
+                    progressDialog.dismiss();
+                }
                 error_text.setVisibility(View.GONE);
                 linearLayout.setVisibility(View.VISIBLE);
 
-                 }
+            }
         },
                 new Response.ErrorListener() {
                     @Override
@@ -201,19 +200,19 @@ public class PublicTransportTabFragment extends Fragment {
                         if (progressDialog != null) {
                             progressDialog.dismiss();
                         }
-                        Log.e("TransportTabError:", error.getMessage()+"");
+                        Log.e("TransportTabError:", error.getMessage() + "");
                         error_text.setVisibility(View.VISIBLE);
                         linearLayout.setVisibility(View.GONE);
                     }
                 });
-        RequestQueue requestQueue= Volley.newRequestQueue(getActivity());
+        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
         requestQueue.add(stringRequest);
     }
 
     void openLoadingDialog() {
-        progressDialog=new ProgressDialog(getActivity());
+        progressDialog = new ProgressDialog(getActivity());
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progressDialog.setMessage( getString(R.string.dialog_message) );
+        progressDialog.setMessage(getString(R.string.dialog_message));
         progressDialog.setCancelable(false);
         progressDialog.show();
     }
