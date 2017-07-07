@@ -8,11 +8,11 @@
     <string name="dialog_message">Loading...</string>
     <string name="error">Сталася помилка. Перевірте мережеве з\'єднання або перезавантажте додаток.</string>
     <string name="action_exit">Вийти</string>
-    <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="banner_ad_unit_id">ca-app-pub-4774499441871392/4540199265</string>
     <string-array
         name="spinner_list_item_array">
-        <item>Транспорт</item>
-        <item>Зупинки</item>
+        <item>ТРАНСПОРТ</item>
+        <item>ЗУПИНКИ</item>
     </string-array>
     <string name="section_format">Hello World from section: %1$d</string>
 

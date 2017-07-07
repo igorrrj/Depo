@@ -1,32 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.igor.depo">
+    package="vin.way.igor.depo">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
-
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
     <uses-feature android:glEsVersion="0x00020000"
         android:required="true"/>
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/MyCustomThemeDemo">
+        android:theme="@style/MyCustomThemeDemo"
+        >
 
         <service
-            android:name=".Widget.MyService"
+            android:name="vin.way.igor.depo.Widget.MyService"
             android:permission="android.permission.BIND_REMOTEVIEWS">
         </service>
         <receiver
-            android:name=".Widget.MyProvider">
+            android:name="vin.way.igor.depo.Widget.MyProvider">
             <intent-filter>
                 <action
                     android:name="android.appwidget.action.APPWIDGET_UPDATE">
@@ -41,17 +38,17 @@
 
 
 
-
-
-        <activity android:name=".Widget.ConfigActivity">
+        <activity android:name="vin.way.igor.depo.Widget.ConfigActivity">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
             </intent-filter>
         </activity>
 
         <activity
-            android:name=".MainActivity"
+            android:name="vin.way.igor.depo.MainActivity"
             android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -61,14 +58,31 @@
 
         </activity>
 
-        <activity android:name=".activities.SelectedTramTabActivity"/>
-        <activity android:name=".activities.SelectedBusTabActivity"/>
-        <activity android:name=".activities.SelectedLikedTabActivity"/>
-        <activity android:name=".activities.SelectedTroleyBusTabActivity"/>
-        <activity android:name=".Preference.SettingsActivity"
-            android:theme="@style/SettingsTheme"/>
-        <activity android:name=".activities.TransportForStopsActivity"/>
-        <activity android:name=".activities.SelectedLikedStopActivity"/>
+        <activity android:name="vin.way.igor.depo.activities.SelectedTramTabActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"/>
+
+        <activity android:name="vin.way.igor.depo.activities.SelectedBusTabActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"/>
+
+        <activity android:name="vin.way.igor.depo.activities.SelectedLikedTabActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"/>
+
+        <activity android:name="vin.way.igor.depo.activities.SelectedTroleyBusTabActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"/>
+
+        <activity android:name="vin.way.igor.depo.activities.TransportForStopsActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
+            />
+
+        <activity android:name="vin.way.igor.depo.activities.SelectedLikedStopActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"/>
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAI0EIRQ9bgKmc69RI_8-JjJ5w3g13SHGk" />

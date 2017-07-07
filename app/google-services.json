@@ -8,18 +8,18 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:498526692961:android:f51ae524a1dbe447",
+        "mobilesdk_app_id": "1:498526692961:android:fce1a2b844bd7676",
         "android_client_info": {
-          "package_name": "com.example.igor.depo"
+          "package_name": "vin.way.igor.depo"
         }
       },
       "oauth_client": [
         {
-          "client_id": "498526692961-djubbpa759dfjt33k3uvef5dkqcp75ec.apps.googleusercontent.com",
+          "client_id": "498526692961-0tr3sfl9l7ec07pjppn3m89fmp3peh1l.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.igor.depo",
-            "certificate_hash": "a391d93d97977c41be6f4cd77418ad3ee9461f64"
+            "package_name": "vin.way.igor.depo",
+            "certificate_hash": "8baf8789e689c2f2351bb61282bee73516ea192a"
           }
         },
         {
